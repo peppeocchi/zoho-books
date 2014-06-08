@@ -94,3 +94,10 @@ $httpCode = $zb->getHttpCode();
 ```
 
 This function will return the response HTTP code after an API call.
+
+==========
+
+## API requests limit
+
+After each call to one of the methods above, a private method check that we haven't reached the Zoho Books limit.
+If we've sent 150 requests, the script is sleeped until the end of the minute from the first request.
