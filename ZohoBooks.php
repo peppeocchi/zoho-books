@@ -142,7 +142,6 @@ class ZohoBooks
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
 		$invoice = curl_exec($ch);
-		var_dump($invoice);
 		$this->httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
 
