@@ -14,6 +14,11 @@ $zb = new ZohoBooks('your authentication token', 'your organization id');
 
 The above code will set the API start time
 
+### How to get authtoken and organizationId?
+
+Please refer to the official Zoho Books Documentation
+https://www.zoho.com/books/api/v3/
+
 ==========
 
 ## Contacts
