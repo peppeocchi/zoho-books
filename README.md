@@ -81,7 +81,7 @@ $creditNotes = $zb->allCreditNotes();
 
 You can also set a data range
 ```php
-$creditNotes = $zb->allCreditNotes();
+$creditNotes = $zb->allCreditNotes('2014-10-07', '2014-10-08');
 ```
 
 ### Get credit note by ID
