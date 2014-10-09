@@ -47,6 +47,11 @@ These functions will return a json string if success, false in case of failure
 $invoices = $zb->allInvoices();
 ```
 
+You can also set a data range
+```php
+$invoices = $zb->allInvoices('2014-10-07', '2014-10-08');
+```
+
 ### Get invoice by ID
 
 ```php
@@ -70,6 +75,11 @@ The second parameter is optional, the default value is false, if set to true wil
 
 ### Get all credit notes
 
+```php
+$creditNotes = $zb->allCreditNotes();
+```
+
+You can also set a data range
 ```php
 $creditNotes = $zb->allCreditNotes();
 ```

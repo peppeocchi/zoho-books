@@ -3,9 +3,12 @@
 /**
  *
  * Zoho Books API
- * Version: 1.0
+ * Version: 1.1
  *
  * Author: Giuseppe Occhipinti - https://github.com/peppeocchi
+ *
+ * CHANGELOG v1.1
+ * 1. Added start/end date when fetching invoices and credit notes
  *
  */
 
@@ -108,12 +111,19 @@ class ZohoBooks
 	/**
 	 * Get all invoices
 	 *
+	 * @param (date) date start
+	 * @param (date) date end
+	 *
 	 * @return (string) json string || false
 	 */
-	public function allInvoices()
+	public function allInvoices($date_start = null, $date_end = null)
 	{
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->invoicesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		if($date_start && $date_end) {
+			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->invoicesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId . '&date_start=' . $date_start . '&date_end=' . $date_end);
+		} else {
+			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->invoicesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		}
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
@@ -190,12 +200,19 @@ class ZohoBooks
 	/**
 	 * Get all credit notes
 	 *
+	 * @param (date) date start
+	 * @param (date) date end
+	 *
 	 * @return (string) json string || false
 	 */
-	public function allCreditNotes()
+	public function allCreditNotes($date_start = null, $date_end = null)
 	{
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->creditnotesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		if($date_start && $date_end) {
+			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->creditnotesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId . '&date_start=' . $date_start . '&date_end=' . $date_end);
+		} else {
+			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->creditnotesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		}
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
