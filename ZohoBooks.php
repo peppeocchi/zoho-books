@@ -3,12 +3,12 @@
 /**
  *
  * Zoho Books API
- * Version: 1.1
+ * Version: 2
  *
  * Author: Giuseppe Occhipinti - https://github.com/peppeocchi
  *
- * CHANGELOG v1.1
- * 1. Added start/end date when fetching invoices and credit notes
+ * CHANGELOG v2
+ * - extended parameters for invoices and credit notes and contacts
  *
  */
 
@@ -68,10 +68,14 @@ class ZohoBooks
 	 *
 	 * @return (string) json string || false
 	 */
-	public function allContacts()
+	public function allContacts($config = array())
 	{
+		$url = $this->apiUrl . $this->contactsUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId;
+		if(isset($config['page'])) {
+			$url .= '&page=' . $config['page'];
+		}
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->contactsUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
@@ -116,14 +120,20 @@ class ZohoBooks
 	 *
 	 * @return (string) json string || false
 	 */
-	public function allInvoices($date_start = null, $date_end = null)
+	public function allInvoices($config = array())
 	{
-		$ch = curl_init();
-		if($date_start && $date_end) {
-			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->invoicesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId . '&date_start=' . $date_start . '&date_end=' . $date_end);
-		} else {
-			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->invoicesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		$url = $this->apiUrl . $this->invoicesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId;
+		if(isset($config['date_start']) && isset($config['date_end'])) {
+			$url .= '&date_start=' . $config['date_start'] . '&date_end=' . $config['date_end'];
 		}
+		if(isset($config['invoice_number_startswith'])) {
+			$url .= '&invoice_number_startswith=' . $config['invoice_number_startswith'];
+		}
+		if(isset($config['page'])) {
+			$url .= '&page=' . $config['page'];
+		}
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
@@ -205,14 +215,17 @@ class ZohoBooks
 	 *
 	 * @return (string) json string || false
 	 */
-	public function allCreditNotes($date_start = null, $date_end = null)
+	public function allCreditNotes($config = array())
 	{
-		$ch = curl_init();
-		if($date_start && $date_end) {
-			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->creditnotesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId . '&date_start=' . $date_start . '&date_end=' . $date_end);
-		} else {
-			curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->creditnotesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId);
+		$url = $this->apiUrl . $this->creditnotesUrl . '?authtoken=' . $this->authtoken . '&organization_id=' . $this->organizationId;
+		if(isset($config['date_start']) && isset($config['date_end'])) {
+			$url .= '&date_start=' . $config['date_start'] . '&date_end=' . $config['date_end'];
 		}
+		if(isset($config['page'])) {
+			$url .= '&page=' . $config['page'];
+		}
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
