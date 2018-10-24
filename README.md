@@ -1,6 +1,8 @@
 Zoho Books API
 ==========
 
+**IMPORTANT** This doesn't support the latest version of ZOHO api
+
 ## Zoho Books API requests limit
 
 At the time of writing, the API requests limit is 150 requests per minute per organization
